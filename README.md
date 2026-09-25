@@ -155,7 +155,7 @@ Since this is a frontend application, no backend server or database is required.
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/your-repository-name.git
+https://github.com/yatharth-kaushik/Banking-System-Web-App
 ```
 
 ### 2. Open the Project
