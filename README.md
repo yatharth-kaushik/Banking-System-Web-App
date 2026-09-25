@@ -163,7 +163,7 @@ https://github.com/yatharth-kaushik/Banking-System-Web-App
 Navigate into the project directory:
 
 ```bash
-cd your-repository-name
+cd Banking-System-Web-App
 ```
 
 ### 3. Run the Application
