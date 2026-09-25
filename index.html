@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyBank – Banking Management System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ TOAST NOTIFICATION CONTAINER ============ -->
+<div id="toastContainer" class="toast-container"></div>
+
+<!-- ============ AUTH PAGE (LOGIN) ============ -->
+<section id="authPage" class="auth-page">
+  <div class="auth-bg-shape shape1"></div>
+  <div class="auth-bg-shape shape2"></div>
+
+  <div class="auth-wrapper">
+    <div class="brand-panel">
+      <div class="brand-logo">
+        <div class="logo-icon">₹</div>
+        <span class="logo-text">MyBank</span>
+      </div>
+      <h1>Banking made<br>simple &amp; secure.</h1>
+      <p>Manage your money, track transactions, and transfer funds instantly with a premium digital banking experience.</p>
+      <ul class="brand-points">
+        <li><span>✓</span> Instant Transfers</li>
+        <li><span>✓</span> Real-time Balance Updates</li>
+        <li><span>✓</span> Bank-grade Security</li>
+        <li><span>✓</span> 24/7 Access</li>
+      </ul>
+    </div>
+
+    <div class="form-panel">
+      <div class="form-card glass">
+        <div class="mobile-logo">
+          <div class="logo-icon">₹</div>
+          <span class="logo-text">MyBank</span>
+        </div>
+        <h2>Welcome back</h2>
+        <p class="subtitle">Login to access your dashboard</p>
+
+        <form id="loginForm" autocomplete="off">
+          <div class="input-group">
+            <label for="loginAccountNumber">Account Number</label>
+            <input type="text" id="loginAccountNumber" inputmode="numeric" maxlength="10" placeholder="10-digit account number" required>
+          </div>
+          <div class="input-group">
+            <label for="loginPin">PIN</label>
+            <input type="password" id="loginPin" inputmode="numeric" maxlength="4" placeholder="4-digit PIN" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </form>
+
+        <div class="divider"><span>or</span></div>
+
+        <button id="showRegisterBtn" class="btn btn-outline btn-block">Create New Account</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REGISTER PAGE ============ -->
+<section id="registerPage" class="auth-page hidden">
+  <div class="auth-bg-shape shape1"></div>
+  <div class="auth-bg-shape shape2"></div>
+
+  <div class="auth-wrapper single">
+    <div class="form-panel">
+      <div class="form-card glass">
+        <div class="mobile-logo">
+          <div class="logo-icon">₹</div>
+          <span class="logo-text">MyBank</span>
+        </div>
+        <h2>Create Account</h2>
+        <p class="subtitle">Open your MyBank account in seconds</p>
+
+        <form id="registerForm" autocomplete="off">
+          <div class="input-group">
+            <label for="regName">Account Holder Name</label>
+            <input type="text" id="regName" placeholder="Enter your full name" required>
+          </div>
+          <div class="input-group">
+            <label for="regPin">4-Digit PIN</label>
+            <input type="password" id="regPin" inputmode="numeric" maxlength="4" placeholder="Create a 4-digit PIN" required>
+          </div>
+          <div class="input-group">
+            <label for="regConfirmPin">Confirm PIN</label>
+            <input type="password" id="regConfirmPin" inputmode="numeric" maxlength="4" placeholder="Confirm your PIN" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+        </form>
+
+        <button id="backToLoginBtn" class="btn btn-ghost btn-block">← Back to Login</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SUCCESS PAGE ============ -->
+<section id="successPage" class="auth-page hidden">
+  <div class="auth-bg-shape shape1"></div>
+  <div class="auth-bg-shape shape2"></div>
+
+  <div class="auth-wrapper single">
+    <div class="form-panel">
+      <div class="form-card glass success-card">
+        <div class="success-icon">✓</div>
+        <h2>Account Created Successfully!</h2>
+        <p class="subtitle">Please save your account number safely</p>
+
+        <div class="success-details">
+          <div class="success-row">
+            <span>Account Number</span>
+            <strong id="successAccNumber">-</strong>
+          </div>
+          <div class="success-row">
+            <span>Initial Balance</span>
+            <strong id="successBalance">₹0.00</strong>
+          </div>
+        </div>
+
+        <button id="goToLoginBtn" class="btn btn-primary btn-block">Continue to Login</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DASHBOARD PAGE ============ -->
+<section id="dashboardPage" class="dashboard-page hidden">
+
+  <!-- Mobile Top Bar -->
+  <div class="mobile-topbar">
+    <button id="menuToggleBtn" class="icon-btn">☰</button>
+    <div class="brand-logo small">
+      <div class="logo-icon">₹</div>
+      <span class="logo-text">MyBank</span>
+    </div>
+    <div></div>
+  </div>
+
+  <!-- Sidebar Overlay for Mobile -->
+  <div id="sidebarOverlay" class="sidebar-overlay hidden"></div>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <div class="brand-logo">
+        <div class="logo-icon">₹</div>
+        <span class="logo-text">MyBank</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-section="dashboard-section">
+        <span class="nav-icon">⌂</span> Dashboard
+      </button>
+      <button class="nav-item" data-section="balance-section">
+        <span class="nav-icon">◆</span> Check Balance
+      </button>
+      <button class="nav-item" data-section="deposit-section">
+        <span class="nav-icon">↓</span> Deposit Money
+      </button>
+      <button class="nav-item" data-section="withdraw-section">
+        <span class="nav-icon">↑</span> Withdraw Money
+      </button>
+      <button class="nav-item" data-section="transfer-section">
+        <span class="nav-icon">⇄</span> Transfer Money
+      </button>
+      <button class="nav-item" data-section="history-section">
+        <span class="nav-icon">≡</span> Transaction History
+      </button>
+      <button class="nav-item" data-section="account-section">
+        <span class="nav-icon">☺</span> Account Details
+      </button>
+      <button class="nav-item" data-section="changepin-section">
+        <span class="nav-icon">⚿</span> Change PIN
+      </button>
+    </nav>
+
+    <button id="logoutBtn" class="logout-btn">
+      <span class="nav-icon">⏻</span> Logout
+    </button>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <!-- DASHBOARD SECTION -->
+    <div id="dashboard-section" class="content-section">
+      <div class="section-header">
+        <div>
+          <h1 id="welcomeName">Welcome back!</h1>
+          <p class="muted">Here's an overview of your account</p>
+        </div>
+      </div>
+
+      <div class="cards-grid">
+        <div class="card balance-card">
+          <p class="card-label">Current Balance</p>
+          <h2 id="dashBalance">₹0.00</h2>
+          <p class="card-sub">Account No: <span id="dashAccNumber">-</span></p>
+        </div>
+        <div class="card stat-card">
+          <p class="card-label">Total Deposits</p>
+          <h3 id="statDeposits">₹0.00</h3>
+        </div>
+        <div class="card stat-card">
+          <p class="card-label">Total Withdrawals</p>
+          <h3 id="statWithdrawals">₹0.00</h3>
+        </div>
+        <div class="card stat-card">
+          <p class="card-label">Total Transactions</p>
+          <h3 id="statTxnCount">0</h3>
+        </div>
+      </div>
+
+      <div class="quick-actions">
+        <button class="quick-btn" data-section="deposit-section">↓ Deposit</button>
+        <button class="quick-btn" data-section="withdraw-section">↑ Withdraw</button>
+        <button class="quick-btn" data-section="transfer-section">⇄ Transfer</button>
+        <button class="quick-btn" data-section="history-section">≡ History</button>
+      </div>
+
+      <div class="table-card">
+        <div class="table-card-header">
+          <h3>Recent Transactions</h3>
+          <button class="link-btn" data-section="history-section">View All →</button>
+        </div>
+        <div id="recentTxnTableWrap" class="table-wrap"></div>
+      </div>
+    </div>
+
+    <!-- CHECK BALANCE SECTION -->
+    <div id="balance-section" class="content-section hidden">
+      <div class="section-header"><h1>Check Balance</h1></div>
+      <div class="card profile-card">
+        <div class="profile-row"><span>Account Holder Name</span><strong id="balName">-</strong></div>
+        <div class="profile-row"><span>Account Number</span><strong id="balAccNumber">-</strong></div>
+        <div class="profile-row highlight"><span>Current Balance</span><strong id="balAmount">₹0.00</strong></div>
+      </div>
+    </div>
+
+    <!-- DEPOSIT SECTION -->
+    <div id="deposit-section" class="content-section hidden">
+      <div class="section-header"><h1>Deposit Money</h1></div>
+      <div class="card form-card-inline">
+        <form id="depositForm">
+          <div class="input-group">
+            <label for="depositAmount">Enter Amount (₹)</label>
+            <input type="number" id="depositAmount" min="1" step="0.01" placeholder="0.00" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Deposit</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- WITHDRAW SECTION -->
+    <div id="withdraw-section" class="content-section hidden">
+      <div class="section-header"><h1>Withdraw Money</h1></div>
+      <div class="card form-card-inline">
+        <form id="withdrawForm">
+          <div class="input-group">
+            <label for="withdrawAmount">Enter Amount (₹)</label>
+            <input type="number" id="withdrawAmount" min="1" step="0.01" placeholder="0.00" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Withdraw</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- TRANSFER SECTION -->
+    <div id="transfer-section" class="content-section hidden">
+      <div class="section-header"><h1>Transfer Money</h1></div>
+      <div class="card form-card-inline">
+        <form id="transferForm">
+          <div class="input-group">
+            <label for="transferAccNumber">Receiver Account Number</label>
+            <input type="text" id="transferAccNumber" inputmode="numeric" maxlength="10" placeholder="10-digit account number" required>
+          </div>
+          <div class="input-group">
+            <label for="transferAmount">Amount (₹)</label>
+            <input type="number" id="transferAmount" min="1" step="0.01" placeholder="0.00" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Transfer</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- TRANSACTION HISTORY SECTION -->
+    <div id="history-section" class="content-section hidden">
+      <div class="section-header"><h1>Transaction History</h1></div>
+      <div class="table-card">
+        <div id="historyTableWrap" class="table-wrap"></div>
+      </div>
+    </div>
+
+    <!-- ACCOUNT DETAILS SECTION -->
+    <div id="account-section" class="content-section hidden">
+      <div class="section-header"><h1>Account Details</h1></div>
+      <div class="card profile-card">
+        <div class="profile-avatar" id="profileAvatar">U</div>
+        <div class="profile-row"><span>Account Holder Name</span><strong id="accName">-</strong></div>
+        <div class="profile-row"><span>Account Number</span><strong id="accNumber">-</strong></div>
+        <div class="profile-row"><span>Current Balance</span><strong id="accBalance">₹0.00</strong></div>
+        <div class="profile-row"><span>Account Created</span><strong id="accCreated">-</strong></div>
+      </div>
+    </div>
+
+    <!-- CHANGE PIN SECTION -->
+    <div id="changepin-section" class="content-section hidden">
+      <div class="section-header"><h1>Change PIN</h1></div>
+      <div class="card form-card-inline">
+        <form id="changePinForm">
+          <div class="input-group">
+            <label for="currentPin">Current PIN</label>
+            <input type="password" id="currentPin" inputmode="numeric" maxlength="4" placeholder="Current 4-digit PIN" required>
+          </div>
+          <div class="input-group">
+            <label for="newPin">New PIN</label>
+            <input type="password" id="newPin" inputmode="numeric" maxlength="4" placeholder="New 4-digit PIN" required>
+          </div>
+          <div class="input-group">
+            <label for="confirmNewPin">Confirm New PIN</label>
+            <input type="password" id="confirmNewPin" inputmode="numeric" maxlength="4" placeholder="Confirm new PIN" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Change PIN</button>
+        </form>
+      </div>
+    </div>
+
+  </main>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
